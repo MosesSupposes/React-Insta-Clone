@@ -3,8 +3,27 @@
  * Title: ---- General Purpose Helpers/Utilities ----
  * Author: ---- Moses Samuel ----
   ========================================================*/ 
+  
+/**
+ * -----------------------------
+ * Insta-clone specific helpers
+ * -----------------------------
+ */
 
+import PropTypes from 'prop-types'
 
+export const useStateTuple = 
+    PropTypes.arrayOf(PropTypes.shape({
+        state: PropTypes.string,
+        setState: PropTypes.func
+    }))
+
+export const useReducerTuple = 
+    PropTypes.arrayOf(PropTypes.shape({
+        state: PropTypes.string,
+        dispatch: PropTypes.func
+    }))
+  
 /**
  * ----------------------------
  *  ---- Universals ----
