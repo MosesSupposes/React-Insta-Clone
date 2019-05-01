@@ -69,7 +69,6 @@ export default function App() {
   //   this.setState({posts : dummyData})
   // }
 
-  useLayoutEffect(, [])
   
   console.log(initialState)
   return (
