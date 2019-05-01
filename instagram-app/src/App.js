@@ -47,11 +47,25 @@ export default function App() {
   // TODO: add likes reducer (and figure out where 'likes' belongs on state)
   const [comments, dispatchComments] = useReducer(commentsReducer, initialState.posts)
   const [posts, dispatchPosts] = useReducer(postsReducer, initialState.comments)
-  const [username, setUsername]  = useState('john doe')
+  const [username, setUsername]  = useState('')
   
-  // componentDidMount() {    
-  //   this.setState({posts : dummyData})
-  // }
+  /* this useEffect call is essentially useless, 
+    but it's there to fulfill Lambda's requirement of using the
+    `componentDidMount` lifecyle hook to initialize state
+  */
+  useEffect(() => {
+    setUsername('john doe')
+    
+    dispatchComments({
+      type: C.ADD_COMMENT,
+      payload: initialState.comments
+    })
+
+    dispatchPosts({
+      type: C.ADD_POST,
+      payload: initialState.posts
+    })
+  }, [])
 
   
   console.log(initialState)
