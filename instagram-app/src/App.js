@@ -45,10 +45,10 @@ initialState.comments =
 
 export default function App() {
   // TODO: add likes reducer (and figure out where 'likes' belongs on state)
-  const [comments, dispatchComments] = useReducer(commentsReducer, initialState.posts)
-  const [posts, dispatchPosts] = useReducer(postsReducer, initialState.comments)
+  const [comments, dispatchComments] = useReducer(commentsReducer, initialState.comments)
+  const [posts, dispatchPosts] = useReducer(postsReducer, initialState.posts)
   const [username, setUsername]  = useState('')
-  
+
   /* this useEffect call is essentially useless, 
     but it's there to fulfill Lambda's requirement of using the
     `componentDidMount` lifecyle hook to initialize state
@@ -66,16 +66,18 @@ export default function App() {
       payload: initialState.posts
     })
   }, [])
-
   
-  console.log(initialState)
   return (
     <div className="App">
 
       <SearchBar />
 
       {/* <PostGrid posts = {state.posts} /> */}
-      <PostGrid posts = {dummyData} />
+      <PostGrid 
+        username={username}
+        posts = {posts} 
+        comments={comments}
+      />
 
     </div>
   )
@@ -86,9 +88,16 @@ export default function App() {
 // ---- Reducers ----
 
 function commentsReducer(state, action) {
+  
   switch(action.type) {
-    case C.ADD_COMMENT:
-      return state.concat(action.payload)
+    case C.ADD_COMMENT: 
+    {   // intentional block scope
+      let oldComments = state[action.payload.postId] || []
+      return {
+        ...state,
+        [action.payload.postId]: [...oldComments, {...action.payload}]
+      }
+    }
     case C.EDIT_COMMENT:
     case C.DELETE_COMMENT:
     default: 
