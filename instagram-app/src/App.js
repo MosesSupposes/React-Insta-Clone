@@ -11,7 +11,7 @@ import PostGrid from './components/PostGrid/PostGrid'
 // utils
 import uuid from 'uuid/v4'
 import * as R from 'ramda'
-import * as _ from './util'
+import * as _ from './lib/util'
 
 // data
 import dummyData from '../src/dummy-data'
