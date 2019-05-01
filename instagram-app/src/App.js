@@ -41,32 +41,29 @@ initialState.comments =
   */
 
 
-// function rootReducer(state, action) {
-//   switch(action.type.toUpperCase()) {
-//     case C.ADD_COMMENT:
-//       const lastPost = state.posts.slice(-1)
-//       return {
-//         posts: state.posts.concat({
-//           ...state.posts.slice(-1),
-//           // comments: lastPost.commtext: action.payload.text,
-//         })
-//       }
-  
-//     default: 
-//       return state
-//   }
-// }
+function commentsReducer(state, action) {
+  switch(action.type) {
+    case C.ADD_COMMENT:
+    case C.EDIT_COMMENT:
+    case C.DELETE_COMMENT:
+    default: 
+      return state
+  }
+}
 
-// function commentsReducer() {
-
-// }
-
-// function postsReducer() {
-
-// }
+function postsReducer(state, action) {
+  switch(action.type) {
+    case C.LIKE_POST:
+    case C.UNLIKE_POST:
+    default:
+      return state
+  }
+}
 
 export default function App() {
-  // const [state, dispatch] = useReducer(rootReducer, initialState)
+  // TODO: add likes reducer (and figure out where 'likes' belongs on state)
+  const [comments, dispatchComments] = useReducer(commentsReducer, initialState.posts)
+  const [posts, dispatchPosts] = useReducer(postsReducer, initialState.comments)
   
   // componentDidMount() {    
   //   this.setState({posts : dummyData})
