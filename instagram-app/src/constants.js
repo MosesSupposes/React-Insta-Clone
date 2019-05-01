@@ -1,7 +1,12 @@
 export default {
+    // Comments
     ADD_COMMENT: 'ADD_COMMENT',
     DELETE_COMMENT: 'DELETE_COMMENT',
     EDIT_COMMENT: 'EDIT_COMMENT',
+
+    // Posts
+    ADD_POST: 'ADD_POST',
+    DELETE_POST: 'DELETE_POST',
     LIKE_POST: 'LIKE_POST',
     UNLIKE_POST: 'UNLIKE_POST',
 }
