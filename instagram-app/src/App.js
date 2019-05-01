@@ -11,18 +11,19 @@ import PostGrid from './components/PostGrid/PostGrid'
 // utils
 import uuid from 'uuid/v4'
 import * as R from 'ramda'
-import * as _ from 'util'
+import * as _ from './util'
 
 // data
 import dummyData from '../src/dummy-data'
 import C from './constants'
 
 // TODO: use R.transduce to massage dummy data before injecting it into state
-const withUniqueId = R.map( post => ({...post, id: uuid()}) ) 
-const filterOutComments = R.map(R.compose())
+const withUniqueId = post => ({...post, id: uuid()}) 
+const filterOutComments = _.filterObj(key => key !== 'comments')
+const withNoCommentsAndUniqueId = R.map(R.compose(withUniqueId ,filterOutComments))
 
 const initialState = {
-  posts: R.compose(filterOutComments, withUniqueId)(dummyData), // dummyData + uuid for each post
+  posts: withNoCommentsAndUniqueId(dummyData), // dummyData + uuid for each post
   username: 'john doe',
 }
 
