@@ -1,5 +1,9 @@
 // React imports
-import React, {useReducer, useLayoutEffect} from 'react'
+import React, {
+  useReducer, 
+  useEffect,
+  useState
+} from 'react'
 
 // styles
 import './App.css'
@@ -68,6 +72,9 @@ export default function App() {
   // componentDidMount() {    
   //   this.setState({posts : dummyData})
   // }
+
+  useLayoutEffect(, [])
+  
   console.log(initialState)
   return (
     <div className="App">
