@@ -1,20 +1,28 @@
+// React imports
 import React, {useReducer, useLayoutEffect} from 'react'
+
+// styles
 import './App.css'
 
+// components
 import SearchBar from './components/SearchBar/SearchBar'
 import PostGrid from './components/PostGrid/PostGrid'
 
-import * as R from 'ramda'
+// utils
 import uuid from 'uuid/v4'
+import * as R from 'ramda'
+import * as _ from 'util'
 
+// data
 import dummyData from '../src/dummy-data'
 import C from './constants'
 
-  // TODO: add more robust id generation 
-const withUniqueId = R.map((post, i) => post.id = uuid())
+// TODO: use R.transduce to massage dummy data before injecting it into state
+const withUniqueId = R.map( post => ({...post, id: uuid()}) ) 
+const filterOutComments = R.map(R.compose())
 
 const initialState = {
-  posts: withUniqueId(dummyData), // dummyData + uuid for each post
+  posts: R.compose(filterOutComments, withUniqueId)(dummyData), // dummyData + uuid for each post
   username: 'john doe',
 }
 
@@ -62,6 +70,7 @@ export default function App() {
   // componentDidMount() {    
   //   this.setState({posts : dummyData})
   // }
+  console.log(initialState)
   return (
     <div className="App">
 
