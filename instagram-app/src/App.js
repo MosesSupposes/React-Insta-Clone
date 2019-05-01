@@ -15,7 +15,8 @@ import * as _ from './lib/util'
 
 // data
 import dummyData from '../src/dummy-data'
-import C from './constants'
+import C from './lib/constants'
+import * as actions from './lib/actionCreators'
 
 // TODO: use R.transduce to massage dummy data before injecting it into state
 const withUniqueId = post => ({...post, id: uuid()}) 
@@ -47,38 +48,38 @@ export default function App() {
   // TODO: add likes reducer (and figure out where 'likes' belongs on state)
   const [comments, dispatchComments] = useReducer(commentsReducer, initialState.comments)
   const [posts, dispatchPosts] = useReducer(postsReducer, initialState.posts)
-  const [username, setUsername]  = useState('')
+  const [username, setUsername]  = useState('john doe')
 
-  /* this useEffect call is essentially useless, 
+  /* this useEffect call is essentially useless
+    -- there's no need to initialize state twice --
     but it's there to fulfill Lambda's requirement of using the
-    `componentDidMount` lifecyle hook to initialize state
+    `componentDidMount` lifecyle hook to populate state on pageLoad.
+
+    (The new hooks are better than the old ones ;P)
   */
   useEffect(() => {
-    setUsername('john doe')
+    // none of this actually effects state...
     
-    dispatchComments({
-      type: C.ADD_COMMENT,
-      payload: initialState.comments
-    })
+    setUsername('jane doe') 
 
-    dispatchPosts({
-      type: C.ADD_POST,
-      payload: initialState.posts
-    })
+    Object.values(initialState.comments).forEach(
+      (comment) => dispatchComments(actions.addComment(comment))
+    )
+
+    initialState.posts.forEach(
+      (post) => dispatchPosts(actions.addPost(post))
+    )
   }, [])
   
   return (
     <div className="App">
-
       <SearchBar />
 
-      {/* <PostGrid posts = {state.posts} /> */}
       <PostGrid 
         username={username}
         posts = {posts} 
         comments={comments}
       />
-
     </div>
   )
 
