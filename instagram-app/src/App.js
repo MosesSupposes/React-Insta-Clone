@@ -1,5 +1,5 @@
 // React imports
-import React, { useReducer, useEffect } from 'react'
+import React, { useReducer, useEffect, useState } from 'react'
 
 // styles
 import './App.css'
@@ -47,10 +47,12 @@ export default function App() {
   // TODO: add likes reducer (and figure out where 'likes' belongs on state)
   const [comments, dispatchComments] = useReducer(commentsReducer, initialState.posts)
   const [posts, dispatchPosts] = useReducer(postsReducer, initialState.comments)
+  const [username, setUsername]  = useState('john doe')
   
   // componentDidMount() {    
   //   this.setState({posts : dummyData})
   // }
+
   
   console.log(initialState)
   return (
