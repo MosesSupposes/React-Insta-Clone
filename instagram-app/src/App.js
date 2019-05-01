@@ -59,7 +59,7 @@ export default function App() {
   */
   useEffect(() => {
     // none of this actually effects state...
-    
+
     setUsername('jane doe') 
 
     Object.values(initialState.comments).forEach(
@@ -76,9 +76,9 @@ export default function App() {
       <SearchBar />
 
       <PostGrid 
-        username={username}
-        posts = {posts} 
-        comments={comments}
+        username={[username, setUsername]}
+        posts = {[posts, dispatchPosts]} 
+        comments={[comments, dispatchComments]}
       />
     </div>
   )
