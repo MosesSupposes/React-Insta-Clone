@@ -1,23 +1,27 @@
 import React from 'react';
 import './App.css';
-import SearchBar from './components/SearchBar';
+import SearchBar from './components/SearchBar/SearchBar';
 import dummyData from '../src/dummy-data';
-import PostGrid from './components/PostGrid';
+import PostGrid from './components/PostGrid/PostGrid';
 
-class App extends React.Component {
-  state = dummyData
+export default class App extends React.Component {
+  state = {
+    posts: []
+  }
+  
+  componentDidMount() {    
+    this.setState({posts : dummyData})
+  }
+  
+  render() {
+    return (
+      <div className="App">
 
-  render(){
-  return (
-    <div className="App">
+        <SearchBar />
 
-      <SearchBar />
+        <PostGrid posts = {this.state.posts} />
 
-      <PostGrid posts = {this.state} />
-
-    </div>
-  );
+      </div>
+    )
+  }
 }
-}
-
-export default App;

@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 import './SearchBar.css'
 
-function SearchBar(props){
+export default function SearchBar(props){
     return (
         <div className="header-container">
             <div className="logo-title">
@@ -18,4 +18,4 @@ function SearchBar(props){
     )
 }
 
-export default SearchBar;
+

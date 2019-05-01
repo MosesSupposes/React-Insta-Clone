@@ -1,14 +1,9 @@
 import React from 'react';
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"
 import "./PostContainer.css";
-import CommentSection from "./CommentSection";
+import CommentSection from "../CommentSection/CommentSection";
 
-export default function PostGrid(props){
-    return props.posts.map(renderPost)
-}
-
-
-function renderPost(props, index){
+function PostContainer(props, index){
     return (
             <div key={index} className="card">
                 <div className="post-header">
@@ -23,19 +18,20 @@ function renderPost(props, index){
                 <p className="likes">{props.likes} likes</p>
 
 
-                <CommentSection
-                comments={props.comments}
-                timestamp={props.timestamp}
-                />
+                <CommentSection username={props.username} comments={props.comments} />
 
             </div>
         )
 }
 
-PostGrid.propTypes = {
+PostContainer.propTypes = {
     username: PropTypes.string,
     thumbnailUrl: PropTypes.string,
     imageUrl: PropTypes.string,
     likes: PropTypes.number,
     timestamp: PropTypes.string
 }
+
+
+
+export default PostContainer;
