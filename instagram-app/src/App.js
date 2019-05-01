@@ -41,24 +41,7 @@ initialState.comments =
   */
 
 
-function commentsReducer(state, action) {
-  switch(action.type) {
-    case C.ADD_COMMENT:
-    case C.EDIT_COMMENT:
-    case C.DELETE_COMMENT:
-    default: 
-      return state
-  }
-}
 
-function postsReducer(state, action) {
-  switch(action.type) {
-    case C.LIKE_POST:
-    case C.UNLIKE_POST:
-    default:
-      return state
-  }
-}
 
 export default function App() {
   // TODO: add likes reducer (and figure out where 'likes' belongs on state)
@@ -68,7 +51,6 @@ export default function App() {
   // componentDidMount() {    
   //   this.setState({posts : dummyData})
   // }
-
   
   console.log(initialState)
   return (
@@ -82,4 +64,30 @@ export default function App() {
     </div>
   )
 
+}
+
+
+// ---- Reducers ----
+
+function commentsReducer(state, action) {
+  switch(action.type) {
+    case C.ADD_COMMENT:
+      return state.concat(action.payload)
+    case C.EDIT_COMMENT:
+    case C.DELETE_COMMENT:
+    default: 
+      return state
+  }
+}
+
+function postsReducer(state, action) {
+  switch(action.type) {
+    case C.ADD_POST:
+      return state.concat(action.payload)
+    case C.DELETE_POST:
+    case C.LIKE_POST:
+    case C.UNLIKE_POST:
+    default:
+      return state
+  }
 }
