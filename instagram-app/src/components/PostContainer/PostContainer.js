@@ -23,7 +23,7 @@ export default function PostContainer(props, index){
 
             <p className="likes">{props.post.likes} likes</p>
 
-            <CommentSection username={props.username} comments={props.comments} />
+            <CommentSection username={props.username} comments={props.comments} postId={props.post.id} />
         </article>
     )
 }

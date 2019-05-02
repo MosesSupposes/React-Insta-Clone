@@ -2,18 +2,23 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./CommentSection.css"
 
-export default function CommentSection() {
-        return ( 
-            <div className="comment-section"> 
-                {/* {this.props.comments.map(renderComment)}  */}
-                <hr/>
+export default function CommentSection(props) {
+    const { 
+        postId,
+        comments:[ comments, dispatchComments ]
+    } = props
+    
+    return ( 
+        <div className="comment-section"> 
+            {comments[postId].map(renderComment)} 
+            <hr/>
 
-                {/* <form onSubmit={this.handleSubmit}>
-                    <input onChange={this.handleChange} className="add-comment" placeholder="Add a comment..." />
-                </form> */}
-                <input className="add-comment" placeholder="Add a comment..." />
-            </div> 
-        )
+            {/* <form onSubmit={this.handleSubmit}>
+                <input onChange={this.handleChange} className="add-comment" placeholder="Add a comment..." />
+            </form> */}
+            <input className="add-comment" placeholder="Add a comment..." />
+        </div> 
+    )
 }
 
 function renderComment(props, index){
