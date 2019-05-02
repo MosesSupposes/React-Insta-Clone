@@ -3,17 +3,27 @@ import PropTypes from "prop-types";
 
 import "./CommentSection.css"
 
-import { addComment, deleteComment } from '../../lib/actionCreators'
+import { addComment, editComment, deleteComment } from '../../lib/actionCreators'
 
 
 export default function CommentSection(props) {
+    // ---- Local state ----
+
     const [ newComment, setNewComment ] = useState('')
+    const [ isEditing, setIsEditing ] = useState(false)
+    const [ indexToEdit, setIndexToEdit ] = useState(-Infinity)
+
+
+    // ---- Destructuring props ----
 
     const { 
         postId,
         username: [username, _],
         comments : [ comments, dispatchComments ]
     } = props
+    
+
+    // ---- Event handlers ----
 
     const handleChange = (e) => {
         setNewComment(e.currentTarget.value)
@@ -21,29 +31,64 @@ export default function CommentSection(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatchComments(addComment({
-            postId,
-            username,
-            text: newComment,
-            createdAt: Date.now()
-        }))
+        if (isEditing) {
+            setIsEditing(false)
+            dispatchComments(editComment({
+                postId,
+                index: indexToEdit,
+                text: newComment,
+                author: username
+            }))
+
+        } else {
+            dispatchComments(addComment({
+                postId,
+                username,
+                text: newComment,
+                createdAt: Date.now()
+            }))
+        }
         setNewComment('')
     }
 
-    const handleClick = ({postId, index, author}, e) => {
-        dispatchComments(deleteComment({
-            postId,
-            index,
-            author
-        }))
+    const handleClick = (payload, e) => {
+        switch(payload.message.toUpperCase()) {
+            case 'EDIT':
+                setIsEditing(true)
+                setIndexToEdit(payload.index)
+                break
+
+            case 'DELETE':
+                dispatchComments(deleteComment({
+                    postId,
+                    index: payload.index,
+                    author: payload.author
+                }))
+                break
+            
+            default:
+                console.log('not a valid message:', payload.message)
+
+        }
     }
 
+
+    // ---- JSX helper ----
 
     const renderComment = (comment, index) => {
         const payload = {
             postId, 
             index, 
             author: comment.username
+        }
+        const deletePayload = {
+            ...payload,
+            message: 'DELETE'
+        }
+
+        const editPayload = {
+            ...payload,
+            message: 'EDIT'
         }
 
         return (
@@ -52,13 +97,20 @@ export default function CommentSection(props) {
                 <span className="comment-content">{comment.text}</span>
                 {
                     (comment.username === username) &&
-                    
+                    <>
+                    <span 
+                        className='edit-comment' 
+                        onClick= {handleClick.bind(null, editPayload)}
+                    >
+                        Edit
+                    </span>
                     <span 
                         className='delete-comment' 
-                        onClick= {handleClick.bind(null, payload)}
+                        onClick= {handleClick.bind(null, deletePayload)}
                     >
                         &times;
                     </span>
+                    </>
                 }
             </div>
         )
