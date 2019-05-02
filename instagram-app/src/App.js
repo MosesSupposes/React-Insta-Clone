@@ -1,3 +1,6 @@
+// ----- Imports ---- 
+
+
 // React imports
 import React, { useReducer, useEffect, useState } from 'react'
 
@@ -15,8 +18,14 @@ import * as _ from './lib/util'
 
 // data
 import dummyData from '../src/dummy-data'
-import C from './lib/constants'
+
+// actions + reducers
+import { postsReducer, commentsReducer } from './lib/reducers'
 import * as actions from './lib/actionCreators'
+
+
+// ---- Helpers / Setup ----
+
 
 // TODO: use R.transduce to massage dummy data before injecting it into state
 const withUniqueId = post => ({...post, id: uuid()}) 
@@ -42,6 +51,7 @@ initialState.comments =
   */
 
 
+// ---- Main: App Component ----
 
 
 export default function App() {
@@ -86,38 +96,4 @@ export default function App() {
       />
     </div>
   )
-
-}
-
-
-// ---- Reducers ----
-
-function commentsReducer(state, action) {
-  
-  switch(action.type) {
-    case C.ADD_COMMENT: 
-    {   // intentional block scope
-      let oldComments = state[action.payload.postId] || []
-      return {
-        ...state,
-        [action.payload.postId]: [...oldComments, {...action.payload}]
-      }
-    }
-    case C.EDIT_COMMENT:
-    case C.DELETE_COMMENT:
-    default: 
-      return state
-  }
-}
-
-function postsReducer(state, action) {
-  switch(action.type) {
-    case C.ADD_POST:
-      return state.concat(action.payload)
-    case C.DELETE_POST:
-    case C.LIKE_POST:
-    case C.UNLIKE_POST:
-    default:
-      return state
-  }
 }
