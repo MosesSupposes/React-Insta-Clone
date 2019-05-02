@@ -21,7 +21,6 @@ export function commentsReducer(state, action) {
         [action.payload.postId]: [...prevComments, {...action.payload}]
       }
       case C.EDIT_COMMENT:
-      console.log('ayo', action.payload)
         return {
           ...state,
           [action.payload.postId]: 
