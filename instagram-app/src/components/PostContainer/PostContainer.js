@@ -11,6 +11,8 @@ export default function PostContainer(props, index){
                     <img src={props.post.thumbnailUrl} className="thumbnail-img" alt="thumbnail"/>
                     <div className="users-name"> {props.post.username} </div> 
                 </div>
+                <span className="timestamp">{props.post.timestamp || Date.now()}</span> {/* I removed timestamp prop, so Date.now is temporary default */}
+
                 <img src={props.post.imageUrl} className="post-image" alt="post" />     
                 <div className="user-interaction">
                     <i className="far fa-heart"></i>
