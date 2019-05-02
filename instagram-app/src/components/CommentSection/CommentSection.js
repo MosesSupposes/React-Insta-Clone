@@ -3,10 +3,17 @@ import PropTypes from "prop-types";
 import "./CommentSection.css"
 
 export default function CommentSection(props) {
+    const [ newComment, setNewComment ] = useState('')
+
     const { 
         postId,
-        comments:[ comments, dispatchComments ]
+        comments : [ comments, dispatchComments ]
     } = props
+
+    const handleChange = (e) => {
+        console.log(e.currentTarget.value)
+        setNewComment(e.currentTarget.value)
+    }
     
     return ( 
         <div className="comment-section"> 
@@ -16,7 +23,12 @@ export default function CommentSection(props) {
             {/* <form onSubmit={this.handleSubmit}>
                 <input onChange={this.handleChange} className="add-comment" placeholder="Add a comment..." />
             </form> */}
-            <input className="add-comment" placeholder="Add a comment..." />
+            <input 
+                className="add-comment" 
+                placeholder="Add a comment..." 
+                value={newComment}
+                onChange={handleChange}
+            />
         </div> 
     )
 }
