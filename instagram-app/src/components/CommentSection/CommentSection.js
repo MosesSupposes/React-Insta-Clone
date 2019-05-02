@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import "./CommentSection.css"
 
-import { addComment } from '../../lib/actionCreators'
+import { addComment, deleteComment } from '../../lib/actionCreators'
 
 
 export default function CommentSection(props) {
@@ -20,7 +20,6 @@ export default function CommentSection(props) {
     }
 
     const handleSubmit = (e) => {
-        console.log('submitted')
         e.preventDefault()
         dispatchComments(addComment({
             postId,
@@ -30,6 +29,29 @@ export default function CommentSection(props) {
         }))
         setNewComment('')
     }
+
+    const handleClick = (postId, index, e) => {
+        dispatchComments(deleteComment({
+            postId,
+            index
+        }))
+    }
+
+
+    const renderComment = (comment, index) => (
+        <div key={index} className="comment">
+            <span className="comment-user-name">{comment.username}</span>
+            <span className="comment-content">{comment.text}</span>
+            <span 
+                className='delete-comment' 
+                style={{color: 'red', marginLeft: '1rem'}}
+                onClick={handleClick.bind(null, postId, index)}
+            >
+                &times;
+            </span>
+        </div>
+    )
+    
     
     return ( 
         <div className="comment-section"> 
@@ -45,15 +67,6 @@ export default function CommentSection(props) {
                 />
             </form>
         </div> 
-    )
-}
-
-function renderComment(props, index){
-    return (
-        <div key={index*100} className="comment">
-            <span className="comment-user-name">{props.username}</span>
-            <span className="comment-content">{props.text}</span>
-        </div>
     )
 }
 

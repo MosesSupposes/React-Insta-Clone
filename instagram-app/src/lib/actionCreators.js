@@ -1,9 +1,13 @@
 import C from './constants'
 
-// TODO: add action creators here
 export const addComment = ({postId, username, text, createdAt}) => ({ 
     type: C.ADD_COMMENT,
     payload: { postId, username, text, createdAt }
+})
+
+export const deleteComment = ({postId, index}) => ({
+    type: C.DELETE_COMMENT,
+    payload: { postId, index }
 })
 
 export const addPost = ({
