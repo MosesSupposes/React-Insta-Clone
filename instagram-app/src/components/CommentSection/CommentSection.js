@@ -30,27 +30,38 @@ export default function CommentSection(props) {
         setNewComment('')
     }
 
-    const handleClick = (postId, index, e) => {
+    const handleClick = ({postId, index, author}, e) => {
         dispatchComments(deleteComment({
             postId,
-            index
+            index,
+            author
         }))
     }
 
 
-    const renderComment = (comment, index) => (
-        <div key={index} className="comment">
-            <span className="comment-user-name">{comment.username}</span>
-            <span className="comment-content">{comment.text}</span>
-            <span 
-                className='delete-comment' 
-                style={{color: 'red', marginLeft: '1rem'}}
-                onClick={handleClick.bind(null, postId, index)}
-            >
-                &times;
-            </span>
-        </div>
-    )
+    const renderComment = (comment, index) => {
+        const payload = {
+            postId, 
+            index, 
+            author: comment.username
+        }
+
+        return (
+            <div key={index} className="comment">
+                <span className="comment-user-name">{comment.username}</span>
+                <span className="comment-content">{comment.text}</span>
+                <span 
+                    className='delete-comment' 
+                    style={{color: 'red', marginLeft: '1rem'}}
+                    onClick= {
+                        handleClick.bind(null, payload)
+                    }
+                >
+                    &times;
+                </span>
+            </div>
+        )
+    }
     
     
     return ( 

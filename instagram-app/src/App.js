@@ -54,6 +54,10 @@ initialState.comments =
 // ---- Main: App Component ----
 
 
+
+// This is a temporary hack to constrain the actions a given user can take throughout the app (only gets used in reducers) 
+let globals = {}
+
 export default function App() {
   // TODO: add likes reducer (and figure out where 'likes' belongs on state)
   const [comments, dispatchComments] = useReducer(commentsReducer, initialState.comments)
@@ -73,7 +77,6 @@ export default function App() {
     (The new hooks are better than the old ones ;P)
   */
   useEffect(() => {
-
     setUsername('jane doe') 
 
     Object.values(initialState.comments).forEach(
@@ -84,6 +87,12 @@ export default function App() {
       (post) => dispatchPosts(actions.addPost(post))
     )
   }, [])
+
+  // keep the global values in sync with top-level state that should be ubiquitous
+  useEffect(() => {
+    globals.username = username
+  }, [username])
+  
   
   return (
     <div className="App">
@@ -97,3 +106,6 @@ export default function App() {
     </div>
   )
 }
+
+
+export const poorMansContext = { ...globals }

@@ -5,9 +5,9 @@ export const addComment = ({postId, username, text, createdAt}) => ({
     payload: { postId, username, text, createdAt }
 })
 
-export const deleteComment = ({postId, index}) => ({
+export const deleteComment = ({postId, index, author}) => ({
     type: C.DELETE_COMMENT,
-    payload: { postId, index }
+    payload: { postId, index, author }
 })
 
 export const addPost = ({
