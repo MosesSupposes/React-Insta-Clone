@@ -25,7 +25,7 @@ export function postsReducer(state, action) {
         case C.LIKE_POST:
         case C.UNLIKE_POST:
         default:
-        return state
+          return state
     }
 }
   

@@ -23,7 +23,8 @@ export default function CommentSection(props) {
         console.log('submitted')
         e.preventDefault()
         dispatchComments(addComment({
-            user: username,
+            postId,
+            username,
             text: newComment,
             createdAt: Date.now()
         }))
