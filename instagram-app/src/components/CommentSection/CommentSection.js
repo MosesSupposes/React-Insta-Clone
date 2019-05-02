@@ -30,6 +30,8 @@ function renderComment(props, index){
     )
 }
 
+
+// TODO: add proper proptypes (across the whole app, really)
 CommentSection.propTypes = {
     comments: PropTypes.arrayOf(PropTypes.shape({
         username: PropTypes.string,
