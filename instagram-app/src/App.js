@@ -55,10 +55,14 @@ export default function App() {
     but it's there to fulfill Lambda's requirement of using the
     `componentDidMount` lifecyle hook to populate state on pageLoad.
 
+    The result of this call is that after the page gets populated with posts, they all get rerendered 
+    to the page
+
+    TODO: the duplicate posts are missing a username and time stamp. Fix this.
+
     (The new hooks are better than the old ones ;P)
   */
   useEffect(() => {
-    // none of this actually effects state...
 
     setUsername('jane doe') 
 
