@@ -1,18 +1,33 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+
 import "./CommentSection.css"
+
+import { addComment } from '../../lib/actionCreators'
+
 
 export default function CommentSection(props) {
     const [ newComment, setNewComment ] = useState('')
 
     const { 
         postId,
+        username: [username, _],
         comments : [ comments, dispatchComments ]
     } = props
 
     const handleChange = (e) => {
-        console.log(e.currentTarget.value)
         setNewComment(e.currentTarget.value)
+    }
+
+    const handleSubmit = (e) => {
+        console.log('submitted')
+        e.preventDefault()
+        dispatchComments(addComment({
+            user: username,
+            text: newComment,
+            createdAt: Date.now()
+        }))
+        setNewComment('')
     }
     
     return ( 
@@ -20,15 +35,14 @@ export default function CommentSection(props) {
             {comments[postId].map(renderComment)} 
             <hr/>
 
-            {/* <form onSubmit={this.handleSubmit}>
-                <input onChange={this.handleChange} className="add-comment" placeholder="Add a comment..." />
-            </form> */}
-            <input 
-                className="add-comment" 
-                placeholder="Add a comment..." 
-                value={newComment}
-                onChange={handleChange}
-            />
+            <form onSubmit={handleSubmit}>    
+                <input 
+                    className="add-comment" 
+                    placeholder="Add a comment..." 
+                    value={newComment}
+                    onChange={handleChange}
+                />
+            </form>
         </div> 
     )
 }
