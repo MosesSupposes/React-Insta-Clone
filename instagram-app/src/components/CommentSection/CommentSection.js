@@ -1,66 +1,92 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+
 import "./CommentSection.css"
 
-class CommentSection extends Component {
-    state = {
-        comments: [],
-        value: ""
+import { addComment, deleteComment } from '../../lib/actionCreators'
+
+
+export default function CommentSection(props) {
+    const [ newComment, setNewComment ] = useState('')
+
+    const { 
+        postId,
+        username: [username, _],
+        comments : [ comments, dispatchComments ]
+    } = props
+
+    const handleChange = (e) => {
+        setNewComment(e.currentTarget.value)
     }
 
-    handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
-        this.setState((prevState) => {
-            console.log('state:', this.state)
-            console.log('prevState', prevState)
-            return {
-                ...prevState,
-                comments: prevState.comments.concat({
-                    username: this.props.username,
-                    text: 'why isnt this working?',
-                    createdAt: Date.now()
-                })
-            }})
-
-        setTimeout(() => console.log(this.state.comments), 3000)
+        dispatchComments(addComment({
+            postId,
+            username,
+            text: newComment,
+            createdAt: Date.now()
+        }))
+        setNewComment('')
     }
 
-    handleChange = (e) => {
-        this.setState({value: e.target.textContent})
+    const handleClick = ({postId, index, author}, e) => {
+        dispatchComments(deleteComment({
+            postId,
+            index,
+            author
+        }))
     }
-    
-    render() {
-        return ( 
-            <div className="comment-section"> 
-                {this.props.comments.map(renderComment)} 
-                <span className="timestamp">{this.props.timestamp || Date.now()}</span> {/* I removed timestamp prop, so Date.now is temporary default */}
-                <hr/>
 
-                <form onSubmit={this.handleSubmit}>
-                    <input onChange={this.handleChange} className="add-comment" placeholder="Add a comment..." />
-                </form>
 
-                
-                <div style={{color:'red', border: 'red'}}>{this.state.value}</div>
-            </div> 
+    const renderComment = (comment, index) => {
+        const payload = {
+            postId, 
+            index, 
+            author: comment.username
+        }
+
+        return (
+            <div key={index} className="comment">
+                <span className="comment-user-name">{comment.username}</span>
+                <span className="comment-content">{comment.text}</span>
+                {
+                    (comment.username === username) &&
+                    
+                    <span 
+                        className='delete-comment' 
+                        onClick= {handleClick.bind(null, payload)}
+                    >
+                        &times;
+                    </span>
+                }
+            </div>
         )
     }
-}
+    
+    
+    return ( 
+        <div className="comment-section"> 
+            {comments[postId].map(renderComment)} 
+            <hr/>
 
-function renderComment(props, index){
-    return (
-        <div key={index*100} className="comment">
-            <span className="comment-user-name">{props.username}</span>
-            <span className="comment-content">{props.text}</span>
-        </div>
+            <form onSubmit={handleSubmit}>    
+                <input 
+                    className="add-comment" 
+                    placeholder="Add a comment..." 
+                    value={newComment}
+                    onChange={handleChange}
+                />
+            </form>
+        </div> 
     )
 }
 
+
+// TODO: add proper proptypes (across the whole app, really)
 CommentSection.propTypes = {
     comments: PropTypes.arrayOf(PropTypes.shape({
         username: PropTypes.string,
         text: PropTypes.string
     }))
 }
-
-export default CommentSection;
