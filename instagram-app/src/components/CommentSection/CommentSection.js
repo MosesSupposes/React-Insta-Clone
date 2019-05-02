@@ -50,14 +50,16 @@ export default function CommentSection(props) {
             <div key={index} className="comment">
                 <span className="comment-user-name">{comment.username}</span>
                 <span className="comment-content">{comment.text}</span>
-                <span 
-                    className='delete-comment' 
-                    onClick= {
-                        handleClick.bind(null, payload)
-                    }
-                >
-                    &times;
-                </span>
+                {
+                    (comment.username === username) &&
+                    
+                    <span 
+                        className='delete-comment' 
+                        onClick= {handleClick.bind(null, payload)}
+                    >
+                        &times;
+                    </span>
+                }
             </div>
         )
     }
