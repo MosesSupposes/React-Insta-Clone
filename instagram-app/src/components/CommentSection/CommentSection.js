@@ -52,7 +52,6 @@ export default function CommentSection(props) {
                 <span className="comment-content">{comment.text}</span>
                 <span 
                     className='delete-comment' 
-                    style={{color: 'red', marginLeft: '1rem'}}
                     onClick= {
                         handleClick.bind(null, payload)
                     }
