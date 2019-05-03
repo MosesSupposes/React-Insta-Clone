@@ -20,6 +20,21 @@ export function commentsReducer(state, action) {
         ...state,
         [action.payload.postId]: [...prevComments, {...action.payload}]
       }
+      case C.EDIT_COMMENT:
+        return {
+          ...state,
+          [action.payload.postId]: 
+            (commentAddedByUser) 
+              ? [
+                  ...prevComments.slice(0, action.payload.index), 
+                  {
+                    ...action.payload,
+                    createdAt: prevComments[action.payload.index].createdAt
+                  },
+                  ...prevComments.slice(action.payload.index + 1)
+                ]
+              : [...prevComments]
+        }
       case C.DELETE_COMMENT:
         return {
           ...state,
@@ -32,7 +47,6 @@ export function commentsReducer(state, action) {
               : [...prevComments]
           
         }
-      case C.EDIT_COMMENT:
       default: 
         return state
   }
