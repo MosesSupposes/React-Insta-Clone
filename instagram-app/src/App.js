@@ -64,30 +64,6 @@ export default function App() {
   const [posts, dispatchPosts] = useReducer(postsReducer, initialState.posts)
   const [username, setUsername]  = useState('john doe')
 
-  /* this useEffect call is essentially useless
-    -- there's no need to initialize state twice --
-    but it's there to fulfill Lambda's requirement of using the
-    `componentDidMount` lifecyle hook to populate state on pageLoad.
-
-    The result of this call is that after the page gets populated with posts, they all get rerendered 
-    to the page
-
-    TODO: the duplicate posts are missing a username and time stamp. Fix this.
-
-    (The new hooks are better than the old ones ;P)
-  */
-  useEffect(() => {
-    setUsername('jane doe') 
-
-    Object.values(initialState.comments).forEach(
-      (comment) => dispatchComments(actions.addComment(comment))
-    )
-
-    initialState.posts.forEach(
-      (post) => dispatchPosts(actions.addPost(post))
-    )
-  }, [])
-
   // keep the global values in sync with top-level state that should be ubiquitous
   useEffect(() => {
     globals.username = username
