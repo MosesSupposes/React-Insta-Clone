@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 
 import "./CommentSection.css"
 
+import { UsernameCtx } from '../../App'
 import { addComment, editComment, deleteComment } from '../../lib/actionCreators'
 
 
 export default function CommentSection(props) {
+    const username = useContext(UsernameCtx)
+
     // ---- Local state ----
 
     const [ newComment, setNewComment ] = useState('')
@@ -18,7 +21,6 @@ export default function CommentSection(props) {
 
     const { 
         postId,
-        username: [username, _],
         comments : [ comments, dispatchComments ]
     } = props
     

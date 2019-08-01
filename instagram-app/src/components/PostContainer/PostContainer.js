@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from "prop-types"
 import "./PostContainer.css";
 import CommentSection from "../CommentSection/CommentSection";
-import { useStateTuple, useReducerTuple } from '../../lib/util'
+import { useReducerTuple } from '../../lib/util'
 
 export default function PostContainer(props, index){
+
     return (
         <article key={index} className="card">
             <header className="post-header">
@@ -23,13 +24,12 @@ export default function PostContainer(props, index){
 
             <p className="likes">{props.post.likes} likes</p>
 
-            <CommentSection username={props.username} comments={props.comments} postId={props.post.id} />
+            <CommentSection comments={props.comments} postId={props.post.id} />
         </article>
     )
 }
 
 PostContainer.propTypes = {
-    username: useStateTuple,
     post: PropTypes.shape({
         thumbnailUrl: PropTypes.string,
         imageUrl: PropTypes.string,

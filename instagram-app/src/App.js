@@ -50,38 +50,28 @@ initialState.comments =
   ]
   */
 
+// Global username context
+export const UsernameCtx = React.createContext()
+
 
 // ---- Main: App Component ----
 
-
-
-// This is a temporary hack to constrain the actions a given user can take throughout the app (only gets used in reducers) 
-let globals = {}
 
 export default function App() {
   // TODO: add likes reducer (and figure out where 'likes' belongs on state)
   const [comments, dispatchComments] = useReducer(commentsReducer, initialState.comments)
   const [posts, dispatchPosts] = useReducer(postsReducer, initialState.posts)
-  const [username, setUsername]  = useState('jane doe')
-
-  // keep the global values in sync with top-level state that should be ubiquitous
-  useEffect(() => {
-    globals.username = username
-  }, [username])
-  
   
   return (
     <div className="App">
       <SearchBar />
 
-      <PostGrid 
-        username={[username, setUsername]}
-        posts = {[posts, dispatchPosts]} 
-        comments={[comments, dispatchComments]}
-      />
+      <UsernameCtx.Provider value='jane doe'>
+        <PostGrid 
+          posts = {[posts, dispatchPosts]} 
+          comments={[comments, dispatchComments]}
+          />
+      </UsernameCtx.Provider>
     </div>
   )
 }
-
-
-export const poorMansContext = { ...globals }
