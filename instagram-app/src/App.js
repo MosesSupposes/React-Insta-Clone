@@ -62,7 +62,7 @@ export default function App() {
   // TODO: add likes reducer (and figure out where 'likes' belongs on state)
   const [comments, dispatchComments] = useReducer(commentsReducer, initialState.comments)
   const [posts, dispatchPosts] = useReducer(postsReducer, initialState.posts)
-  const [username, setUsername]  = useState('john doe')
+  const [username, setUsername]  = useState('jane doe')
 
   // keep the global values in sync with top-level state that should be ubiquitous
   useEffect(() => {
