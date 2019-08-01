@@ -2,7 +2,7 @@ import React from 'react'
 
 import PostContainer from "../PostContainer/PostContainer"
 
-import { useStateTuple, useReducerTuple } from 'util'
+import { useReducerTuple } from 'util'
 
 
 // mapperFn
@@ -12,13 +12,12 @@ const renderPost = (props) => (val, index, arr) => (
 
 
 export default function PostGrid(props){
-    const { posts: [allPosts, _], username, comments } = props 
-    return allPosts.map(renderPost({username, comments}))
+    const { posts: [allPosts, _], comments } = props 
+    return allPosts.map( renderPost({comments}) )
 }
 
 
 PostGrid.propTypes = {
-    username: useStateTuple,
     posts: useReducerTuple,
     comments: useReducerTuple
 }
