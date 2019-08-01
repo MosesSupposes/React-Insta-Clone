@@ -34,7 +34,6 @@ const withNoCommentsAndUniqueId = R.map(R.compose(withUniqueId ,filterOutComment
 
 const initialState = {
   posts: withNoCommentsAndUniqueId(dummyData), // dummyData + uuid for each post
-  username: 'john doe',
 }
 
 initialState.comments = 
